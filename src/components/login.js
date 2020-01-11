@@ -14,36 +14,36 @@ const Login = () => {
   const [pwdInput, setPwdInput] = React.useState('');
   const [confirmPwdInput, setConfirmPwdInput] = React.useState('');
   const [confirmState, setConfirmState] = React.useState({
-    message: false,
     warning: false,
     success: false,
   });
 
+  const update = (props) => {
+    setConfirmState({
+      ...confirmState,
+      ...props
+    });
+  };
+
   React.useEffect(() => {
     if (pwdInput === confirmPwdInput && confirmPwdInput !== '') {
-      setConfirmState({
-        ...confirmState,
-        message: true,
+      update({
         warning: false,
-        success: true,
+        success: true
       });
     } else if (pwdInput !== confirmPwdInput && confirmPwdInput !== '') {
-      setConfirmState({
-        ...confirmState,
-        message: true,
+      update({
         warning: true,
-        success: false,
+        success: false
       });
     } else if (pwdInput === '' && confirmPwdInput === '') {
-      setConfirmState({
-        ...confirmState,
-        message: false,
+      update({
         warning: false,
-        success: false,
+        success: false
       });
     }
-  }, [pwdInput, confirmPwdInput, confirmState]);
-  console.log(confirmState.message);
+  // eslint-disable-next-line
+  }, [pwdInput, confirmPwdInput]);
   return (
     <div>
       <Paper>
@@ -71,7 +71,7 @@ const Login = () => {
           </Grid>
           <Grid container spacing={8} alignItems="flex-end">
             <Grid item md sm xs>
-              {confirmState.message && (
+              {(confirmState.warning || confirmState.success) && (
                 <Grid item md sm xs>
                   {confirmState.warning && (
                     <Alert severity="error">{'Error: Password\'s Don\'t Match'}</Alert>
