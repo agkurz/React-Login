@@ -18,31 +18,23 @@ const Login = () => {
     success: false,
   });
 
-  const update = (props) => {
-    setConfirmState({
-      ...confirmState,
-      ...props
-    });
-  };
-
   React.useEffect(() => {
     if (pwdInput === confirmPwdInput && confirmPwdInput !== '') {
-      update({
+      setConfirmState({
         warning: false,
         success: true
       });
     } else if (pwdInput !== confirmPwdInput && confirmPwdInput !== '') {
-      update({
+      setConfirmState({
         warning: true,
         success: false
       });
     } else if (pwdInput === '' && confirmPwdInput === '') {
-      update({
+      setConfirmState({
         warning: false,
         success: false
       });
     }
-  // eslint-disable-next-line
   }, [pwdInput, confirmPwdInput]);
   return (
     <div>
@@ -56,17 +48,44 @@ const Login = () => {
           <Grid container spacing={8} alignItems="flex-end">
 
             <Grid item md sm xs>
-              <TextField id="username" label="Username" type="email" fullWidth autoFocus required onChange={(e) => setUserInput(e.target.value)} value={userInput} />
+              <TextField
+                id="username"
+                label="Username"
+                type="email"
+                fullWidth
+                autoFocus
+                required
+                onChange={(e) => setUserInput(e.target.value)}
+                value={userInput}
+              />
             </Grid>
           </Grid>
           <Grid container spacing={8} alignItems="flex-end">
             <Grid item md sm xs>
-              <TextField id="password" label="Password" type="password" fullWidth required onChange={(e) => setPwdInput(e.target.value)} value={pwdInput} />
+              <TextField
+                id="password"
+                label="Password"
+                type="password"
+                fullWidth
+                required
+                error={confirmState.warning}
+                onChange={(e) => setPwdInput(e.target.value)}
+                value={pwdInput}
+              />
             </Grid>
           </Grid>
           <Grid container spacing={8} alignItems="flex-end">
             <Grid item md sm xs>
-              <TextField id="confirmPassword" label="Confirm Password" type="password" fullWidth required onChange={(e) => setConfirmPwdInput(e.target.value)} value={confirmPwdInput} />
+              <TextField
+                id="confirmPassword"
+                label="Confirm Password"
+                type="password"
+                fullWidth
+                required
+                error={confirmState.warning}
+                onChange={(e) => setConfirmPwdInput(e.target.value)}
+                value={confirmPwdInput}
+              />
             </Grid>
           </Grid>
           <Grid container spacing={8} alignItems="flex-end">
